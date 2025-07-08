@@ -1,0 +1,762 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2024-01-15T10:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2023.5.8",
+  "resources": [
+    {
+      "_id": "req_root",
+      "parentId": "wrk_analytics",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "url": "{{ _.base_url }}",
+      "name": "API Root",
+      "description": "Test de la route principale de l'API",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1705312800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_views_list",
+      "parentId": "fld_views",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "url": "{{ _.base_url }}/api/views",
+      "name": "Liste des vues",
+      "description": "Récupérer toutes les vues avec pagination et filtres",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "page",
+          "value": "1",
+          "description": "Numéro de page",
+          "disabled": false
+        },
+        {
+          "name": "limit",
+          "value": "10",
+          "description": "Nombre d'éléments par page",
+          "disabled": false
+        },
+        {
+          "name": "source",
+          "value": "",
+          "description": "Filtrer par source",
+          "disabled": true
+        },
+        {
+          "name": "visitor",
+          "value": "",
+          "description": "Filtrer par visiteur",
+          "disabled": true
+        },
+        {
+          "name": "url",
+          "value": "",
+          "description": "Filtrer par URL",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1705312800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_views_create",
+      "parentId": "fld_views",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "url": "{{ _.base_url }}/api/views",
+      "name": "Créer une vue",
+      "description": "Créer une nouvelle vue avec métadonnées flexibles",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"source\": \"website\",\n  \"url\": \"https://example.com/home\",\n  \"visitor\": \"user123\",\n  \"meta\": {\n    \"userAgent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36\",\n    \"referrer\": \"https://google.com\",\n    \"screenSize\": \"1920x1080\",\n    \"language\": \"fr-FR\",\n    \"timezone\": \"Europe/Paris\"\n  }\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1705312800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_views_create_complex",
+      "parentId": "fld_views",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "url": "{{ _.base_url }}/api/views",
+      "name": "Créer une vue (meta complexe)",
+      "description": "Créer une vue avec des métadonnées complexes",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"source\": \"mobile-app\",\n  \"url\": \"https://example.com/product/123\",\n  \"visitor\": \"user456\",\n  \"meta\": {\n    \"device\": {\n      \"type\": \"smartphone\",\n      \"model\": \"iPhone 12\",\n      \"os\": \"iOS 15.0\",\n      \"appVersion\": \"2.1.0\"\n    },\n    \"location\": {\n      \"country\": \"France\",\n      \"city\": \"Paris\",\n      \"coordinates\": {\n        \"lat\": 48.8566,\n        \"lng\": 2.3522\n      }\n    },\n    \"preferences\": {\n      \"language\": \"fr\",\n      \"theme\": \"dark\",\n      \"notifications\": true\n    },\n    \"session\": {\n      \"id\": \"sess_789\",\n      \"startTime\": \"2024-01-15T10:00:00Z\",\n      \"duration\": 1800\n    }\n  }\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1705312800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_views_get",
+      "parentId": "fld_views",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "url": "{{ _.base_url }}/api/views/{{ _.view_id }}",
+      "name": "Récupérer une vue",
+      "description": "Récupérer les détails d'une vue par ID",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1705312800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_views_update",
+      "parentId": "fld_views",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "url": "{{ _.base_url }}/api/views/{{ _.view_id }}",
+      "name": "Modifier une vue",
+      "description": "Modifier une vue existante",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"source\": \"website-updated\",\n  \"url\": \"https://example.com/home-updated\",\n  \"visitor\": \"user123-updated\",\n  \"meta\": {\n    \"userAgent\": \"Mozilla/5.0 (Updated)\",\n    \"referrer\": \"https://bing.com\",\n    \"screenSize\": \"2560x1440\",\n    \"updatedAt\": \"2024-01-15T12:00:00Z\"\n  }\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1705312800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_views_delete",
+      "parentId": "fld_views",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "url": "{{ _.base_url }}/api/views/{{ _.view_id }}",
+      "name": "Supprimer une vue",
+      "description": "Supprimer une vue par ID",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1705312800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_views_stats",
+      "parentId": "fld_views",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "url": "{{ _.base_url }}/api/views/stats/summary",
+      "name": "Statistiques des vues",
+      "description": "Récupérer les statistiques des vues",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1705312800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_actions_list",
+      "parentId": "fld_actions",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "url": "{{ _.base_url }}/api/actions",
+      "name": "Liste des actions",
+      "description": "Récupérer toutes les actions avec pagination et filtres",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "page",
+          "value": "1",
+          "description": "Numéro de page",
+          "disabled": false
+        },
+        {
+          "name": "limit",
+          "value": "10",
+          "description": "Nombre d'éléments par page",
+          "disabled": false
+        },
+        {
+          "name": "source",
+          "value": "",
+          "description": "Filtrer par source",
+          "disabled": true
+        },
+        {
+          "name": "action",
+          "value": "",
+          "description": "Filtrer par type d'action",
+          "disabled": true
+        },
+        {
+          "name": "visitor",
+          "value": "",
+          "description": "Filtrer par visiteur",
+          "disabled": true
+        },
+        {
+          "name": "url",
+          "value": "",
+          "description": "Filtrer par URL",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1705312800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_actions_create",
+      "parentId": "fld_actions",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "url": "{{ _.base_url }}/api/actions",
+      "name": "Créer une action",
+      "description": "Créer une nouvelle action avec métadonnées",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"source\": \"website\",\n  \"url\": \"https://example.com/product/456\",\n  \"action\": \"click\",\n  \"visitor\": \"user789\",\n  \"meta\": {\n    \"element\": \"buy-button\",\n    \"position\": {\n      \"x\": 150,\n      \"y\": 300\n    },\n    \"timestamp\": \"2024-01-15T10:30:00Z\",\n    \"sessionId\": \"sess_12345\"\n  }\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1705312800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_actions_create_complex",
+      "parentId": "fld_actions",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "url": "{{ _.base_url }}/api/actions",
+      "name": "Créer une action (meta complexe)",
+      "description": "Créer une action avec des métadonnées complexes",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"source\": \"mobile-app\",\n  \"url\": \"https://example.com/checkout\",\n  \"action\": \"add_to_cart\",\n  \"visitor\": \"user101\",\n  \"meta\": {\n    \"product\": {\n      \"id\": \"prod_789\",\n      \"name\": \"Smartphone XYZ\",\n      \"price\": 599.99,\n      \"category\": \"electronics\",\n      \"brand\": \"TechCorp\",\n      \"specifications\": {\n        \"storage\": \"128GB\",\n        \"color\": \"black\",\n        \"warranty\": \"2 years\"\n      }\n    },\n    \"cart\": {\n      \"totalItems\": 3,\n      \"totalValue\": 1299.97,\n      \"items\": [\n        {\n          \"id\": \"prod_789\",\n          \"quantity\": 1,\n          \"price\": 599.99\n        },\n        {\n          \"id\": \"prod_456\",\n          \"quantity\": 2,\n          \"price\": 350.00\n        }\n      ]\n    },\n    \"user\": {\n      \"isLoggedIn\": true,\n      \"membership\": \"premium\",\n      \"loyaltyPoints\": 1250,\n      \"preferences\": {\n        \"newsletter\": true,\n        \"marketing\": false\n      }\n    },\n    \"session\": {\n      \"id\": \"sess_67890\",\n      \"startTime\": \"2024-01-15T09:00:00Z\",\n      \"pagesViewed\": 5,\n      \"timeOnSite\": 1200\n    }\n  }\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1705312800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_actions_get",
+      "parentId": "fld_actions",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "url": "{{ _.base_url }}/api/actions/{{ _.action_id }}",
+      "name": "Récupérer une action",
+      "description": "Récupérer les détails d'une action par ID",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1705312800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_actions_update",
+      "parentId": "fld_actions",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "url": "{{ _.base_url }}/api/actions/{{ _.action_id }}",
+      "name": "Modifier une action",
+      "description": "Modifier une action existante",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"source\": \"mobile-app-updated\",\n  \"url\": \"https://example.com/checkout-updated\",\n  \"action\": \"purchase_completed\",\n  \"visitor\": \"user101-updated\",\n  \"meta\": {\n    \"product\": {\n      \"id\": \"prod_789\",\n      \"name\": \"Smartphone XYZ Updated\",\n      \"price\": 649.99\n    },\n    \"updatedAt\": \"2024-01-15T12:30:00Z\"\n  }\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1705312800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_actions_delete",
+      "parentId": "fld_actions",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "url": "{{ _.base_url }}/api/actions/{{ _.action_id }}",
+      "name": "Supprimer une action",
+      "description": "Supprimer une action par ID",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1705312800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_actions_stats",
+      "parentId": "fld_actions",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "url": "{{ _.base_url }}/api/actions/stats/summary",
+      "name": "Statistiques des actions",
+      "description": "Récupérer les statistiques des actions",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1705312800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_goals_list",
+      "parentId": "fld_goals",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "url": "{{ _.base_url }}/api/goals",
+      "name": "Liste des objectifs",
+      "description": "Récupérer tous les objectifs avec pagination et filtres",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "page",
+          "value": "1",
+          "description": "Numéro de page",
+          "disabled": false
+        },
+        {
+          "name": "limit",
+          "value": "10",
+          "description": "Nombre d'éléments par page",
+          "disabled": false
+        },
+        {
+          "name": "source",
+          "value": "",
+          "description": "Filtrer par source",
+          "disabled": true
+        },
+        {
+          "name": "goal",
+          "value": "",
+          "description": "Filtrer par type d'objectif",
+          "disabled": true
+        },
+        {
+          "name": "visitor",
+          "value": "",
+          "description": "Filtrer par visiteur",
+          "disabled": true
+        },
+        {
+          "name": "url",
+          "value": "",
+          "description": "Filtrer par URL",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1705312800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_goals_create",
+      "parentId": "fld_goals",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "url": "{{ _.base_url }}/api/goals",
+      "name": "Créer un objectif",
+      "description": "Créer un nouvel objectif avec métadonnées",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"source\": \"website\",\n  \"url\": \"https://example.com/thank-you\",\n  \"goal\": \"purchase_completed\",\n  \"visitor\": \"user202\",\n  \"meta\": {\n    \"orderId\": \"order_12345\",\n    \"amount\": 299.99,\n    \"products\": [\"prod_001\", \"prod_002\"],\n    \"paymentMethod\": \"credit_card\"\n  }\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1705312800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_goals_create_complex",
+      "parentId": "fld_goals",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "url": "{{ _.base_url }}/api/goals",
+      "name": "Créer un objectif (meta complexe)",
+      "description": "Créer un objectif avec des métadonnées complexes",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"source\": \"mobile-app\",\n  \"url\": \"https://example.com/subscription\",\n  \"goal\": \"subscription_activated\",\n  \"visitor\": \"user303\",\n  \"meta\": {\n    \"subscription\": {\n      \"plan\": \"premium\",\n      \"duration\": \"12 months\",\n      \"price\": 99.99,\n      \"features\": [\n        \"unlimited_access\",\n        \"priority_support\",\n        \"advanced_analytics\",\n        \"custom_reports\",\n        \"api_access\"\n      ],\n      \"billingCycle\": \"monthly\",\n      \"autoRenew\": true\n    },\n    \"payment\": {\n      \"method\": \"credit_card\",\n      \"provider\": \"stripe\",\n      \"transactionId\": \"txn_67890\",\n      \"status\": \"completed\",\n      \"card\": {\n        \"type\": \"visa\",\n        \"last4\": \"4242\",\n        \"country\": \"US\"\n      }\n    },\n    \"user\": {\n      \"email\": \"user@example.com\",\n      \"registrationDate\": \"2023-01-15\",\n      \"previousPlan\": \"free\",\n      \"upgradeReason\": \"need_advanced_features\",\n      \"referralSource\": \"google_ads\"\n    },\n    \"conversion\": {\n      \"funnel\": \"free_to_premium\",\n      \"touchpoints\": 8,\n      \"timeToConvert\": 86400,\n      \"abTest\": {\n      \t\"variant\": \"A\",\n      \t\"conversionRate\": 0.15\n      }\n    }\n  }\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1705312800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_goals_get",
+      "parentId": "fld_goals",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "url": "{{ _.base_url }}/api/goals/{{ _.goal_id }}",
+      "name": "Récupérer un objectif",
+      "description": "Récupérer les détails d'un objectif par ID",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1705312800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_goals_update",
+      "parentId": "fld_goals",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "url": "{{ _.base_url }}/api/goals/{{ _.goal_id }}",
+      "name": "Modifier un objectif",
+      "description": "Modifier un objectif existant",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"source\": \"mobile-app-updated\",\n  \"url\": \"https://example.com/subscription-updated\",\n  \"goal\": \"subscription_renewed\",\n  \"visitor\": \"user303-updated\",\n  \"meta\": {\n    \"subscription\": {\n      \"plan\": \"premium\",\n      \"duration\": \"24 months\",\n      \"price\": 89.99\n    },\n    \"updatedAt\": \"2024-01-15T13:00:00Z\"\n  }\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1705312800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_goals_delete",
+      "parentId": "fld_goals",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "url": "{{ _.base_url }}/api/goals/{{ _.goal_id }}",
+      "name": "Supprimer un objectif",
+      "description": "Supprimer un objectif par ID",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1705312800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_goals_stats",
+      "parentId": "fld_goals",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "url": "{{ _.base_url }}/api/goals/stats/summary",
+      "name": "Statistiques des objectifs",
+      "description": "Récupérer les statistiques des objectifs",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1705312800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "wrk_analytics",
+      "parentId": null,
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "name": "API Analytics MongoDB",
+      "description": "Collection pour tester l'API REST d'analytics avec MongoDB",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "fld_views",
+      "parentId": "wrk_analytics",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "name": "📊 Vues",
+      "description": "Endpoints pour gérer les vues de pages",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1705312800000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_actions",
+      "parentId": "wrk_analytics",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "name": "🎯 Actions",
+      "description": "Endpoints pour gérer les actions utilisateur",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1705312800000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_goals",
+      "parentId": "wrk_analytics",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "name": "🏆 Objectifs",
+      "description": "Endpoints pour gérer les objectifs et conversions",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1705312800000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "env_analytics",
+      "parentId": "wrk_analytics",
+      "modified": 1705312800000,
+      "created": 1705312800000,
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:3000",
+        "view_id": "",
+        "action_id": "",
+        "goal_id": ""
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "base_url",
+          "view_id",
+          "action_id",
+          "goal_id"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1705312800000,
+      "_type": "environment"
+    }
+  ]
+} 
