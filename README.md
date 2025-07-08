@@ -1,128 +1,187 @@
-# API REST Analytics avec MongoDB
+# 🚀 API REST Analytics avec MongoDB
 
-Une API REST complète pour collecter et analyser des données d'analytics avec MongoDB.
+Une API REST complète et flexible pour collecter et analyser des données d'analytics avec MongoDB. Parfaite pour stocker des logs, des événements utilisateur et des métadonnées de toutes formes.
 
-## 🚀 Installation
+## 📋 Table des matières
 
-1. **Installer les dépendances :**
+- [🚀 Installation rapide](#-installation-rapide)
+- [📊 Fonctionnalités](#-fonctionnalités)
+- [🗄️ Structure des données](#️-structure-des-données)
+- [🔧 API Endpoints](#-api-endpoints)
+- [🧪 Tests avec Insomnia](#-tests-avec-insomnia)
+- [📈 Exemples d'utilisation](#-exemples-dutilisation)
+- [🛠️ Configuration](#️-configuration)
+- [📚 Documentation complète](#-documentation-complète)
+
+## 🚀 Installation rapide
+
+### Prérequis
+
+- **Node.js** (version 14 ou supérieure)
+- **MongoDB** (version 4.4 ou supérieure)
+- **npm** ou **yarn**
+
+### Installation en 3 étapes
 
 ```bash
+# 1. Installer les dépendances
 npm install
-```
 
-2. **Configurer l'environnement :**
-
-```bash
+# 2. Configurer l'environnement
 cp env.example .env
-# Éditer le fichier .env avec vos paramètres
-```
+# Éditer .env avec votre URI MongoDB
 
-3. **Démarrer MongoDB :**
-   Assurez-vous que MongoDB est en cours d'exécution sur votre machine.
-
-4. **Lancer l'API :**
-
-```bash
-# Mode développement
-npm run dev
-
-# Mode production
+# 3. Démarrer l'API
 npm start
 ```
 
 L'API sera disponible sur `http://localhost:3000`
 
-## 📊 Ressources disponibles
+## 📊 Fonctionnalités
 
-### 1. Vues (`/api/views`)
+### ✨ Fonctionnalités principales
 
-Collecte des vues de pages avec métadonnées flexibles.
+- **3 ressources flexibles** : Vues, Actions, Objectifs
+- **Métadonnées dynamiques** : Stockage de n'importe quelle structure JSON
+- **API REST complète** : CRUD + statistiques + filtres
+- **Pagination automatique** : Gestion des grandes collections
+- **Filtres avancés** : Recherche par tous les champs
+- **Statistiques agrégées** : Analyses en temps réel
+- **Validation robuste** : Gestion d'erreurs centralisée
 
-**Structure :**
+### 🎯 Cas d'usage
 
-```json
-{
-  "source": "string",
-  "url": "string",
-  "visitor": "string",
-  "createdAt": "Date",
-  "meta": {}
-}
-```
+- **Analytics web** : Tracking de pages vues, clics, conversions
+- **Applications mobiles** : Événements utilisateur, crashs, performances
+- **E-commerce** : Comportement d'achat, paniers abandonnés
+- **SaaS** : Utilisation des fonctionnalités, abonnements
+- **IoT** : Données de capteurs, événements système
 
-### 2. Actions (`/api/actions`)
+## 🗄️ Structure des données
 
-Collecte des actions utilisateur (clics, scrolls, etc.).
-
-**Structure :**
-
-```json
-{
-  "source": "string",
-  "url": "string",
-  "action": "string",
-  "visitor": "string",
-  "createdAt": "Date",
-  "meta": {}
-}
-```
-
-### 3. Objectifs (`/api/goals`)
-
-Collecte des conversions et objectifs atteints.
-
-**Structure :**
+### 📊 Vues (`/api/views`)
 
 ```json
 {
-  "source": "string",
-  "url": "string",
-  "goal": "string",
-  "visitor": "string",
-  "createdAt": "Date",
-  "meta": {}
+  "source": "string", // Source de la vue (website, mobile-app, etc.)
+  "url": "string", // URL de la page
+  "visitor": "string", // Identifiant du visiteur
+  "createdAt": "Date", // Timestamp automatique
+  "meta": {} // Métadonnées flexibles (n'importe quoi !)
 }
 ```
 
-## 🔧 Endpoints disponibles
+### 🎯 Actions (`/api/actions`)
 
-### Vues
+```json
+{
+  "source": "string", // Source de l'action
+  "url": "string", // URL de la page
+  "action": "string", // Type d'action (click, scroll, etc.)
+  "visitor": "string", // Identifiant du visiteur
+  "createdAt": "Date", // Timestamp automatique
+  "meta": {} // Métadonnées flexibles
+}
+```
 
-- `GET /api/views` - Liste des vues (avec pagination et filtres)
-- `GET /api/views/:id` - Détails d'une vue
-- `POST /api/views` - Créer une vue
-- `PUT /api/views/:id` - Modifier une vue
-- `DELETE /api/views/:id` - Supprimer une vue
-- `GET /api/views/stats/summary` - Statistiques des vues
+### 🏆 Objectifs (`/api/goals`)
 
-### Actions
+```json
+{
+  "source": "string", // Source de l'objectif
+  "url": "string", // URL de la page
+  "goal": "string", // Type d'objectif (purchase, signup, etc.)
+  "visitor": "string", // Identifiant du visiteur
+  "createdAt": "Date", // Timestamp automatique
+  "meta": {} // Métadonnées flexibles
+}
+```
 
-- `GET /api/actions` - Liste des actions (avec pagination et filtres)
-- `GET /api/actions/:id` - Détails d'une action
-- `POST /api/actions` - Créer une action
-- `PUT /api/actions/:id` - Modifier une action
-- `DELETE /api/actions/:id` - Supprimer une action
-- `GET /api/actions/stats/summary` - Statistiques des actions
+## 🔧 API Endpoints
 
-### Objectifs
+### 📊 Vues (`/api/views`)
 
-- `GET /api/goals` - Liste des objectifs (avec pagination et filtres)
-- `GET /api/goals/:id` - Détails d'un objectif
-- `POST /api/goals` - Créer un objectif
-- `PUT /api/goals/:id` - Modifier un objectif
-- `DELETE /api/goals/:id` - Supprimer un objectif
-- `GET /api/goals/stats/summary` - Statistiques des objectifs
+| Méthode  | Endpoint                   | Description                           |
+| -------- | -------------------------- | ------------------------------------- |
+| `GET`    | `/api/views`               | Liste des vues (pagination + filtres) |
+| `GET`    | `/api/views/:id`           | Détails d'une vue                     |
+| `POST`   | `/api/views`               | Créer une vue                         |
+| `PUT`    | `/api/views/:id`           | Modifier une vue                      |
+| `DELETE` | `/api/views/:id`           | Supprimer une vue                     |
+| `GET`    | `/api/views/stats/summary` | Statistiques des vues                 |
 
-## 📝 Exemples d'utilisation
+### 🎯 Actions (`/api/actions`)
 
-### Créer une vue
+| Méthode  | Endpoint                     | Description                              |
+| -------- | ---------------------------- | ---------------------------------------- |
+| `GET`    | `/api/actions`               | Liste des actions (pagination + filtres) |
+| `GET`    | `/api/actions/:id`           | Détails d'une action                     |
+| `POST`   | `/api/actions`               | Créer une action                         |
+| `PUT`    | `/api/actions/:id`           | Modifier une action                      |
+| `DELETE` | `/api/actions/:id`           | Supprimer une action                     |
+| `GET`    | `/api/actions/stats/summary` | Statistiques des actions                 |
+
+### 🏆 Objectifs (`/api/goals`)
+
+| Méthode  | Endpoint                   | Description                                |
+| -------- | -------------------------- | ------------------------------------------ |
+| `GET`    | `/api/goals`               | Liste des objectifs (pagination + filtres) |
+| `GET`    | `/api/goals/:id`           | Détails d'un objectif                      |
+| `POST`   | `/api/goals`               | Créer un objectif                          |
+| `PUT`    | `/api/goals/:id`           | Modifier un objectif                       |
+| `DELETE` | `/api/goals/:id`           | Supprimer un objectif                      |
+| `GET`    | `/api/goals/stats/summary` | Statistiques des objectifs                 |
+
+## 🧪 Tests avec Insomnia
+
+### Import de la collection
+
+1. Ouvrir Insomnia
+2. Cliquer sur **"Import/Export"** (icône ↕️)
+3. Sélectionner **"Import Data"** → **"From File"**
+4. Choisir `insomnia-collection.json`
+5. La collection **"API Analytics MongoDB"** apparaîtra
+
+### Ordre de test recommandé
+
+```bash
+# 1. Test de base
+GET http://localhost:3000/
+
+# 2. Créer des données
+POST /api/views (exemple simple)
+POST /api/views (exemple complexe)
+POST /api/actions (exemple simple)
+POST /api/actions (exemple complexe)
+POST /api/goals (exemple simple)
+POST /api/goals (exemple complexe)
+
+# 3. Lister les données
+GET /api/views
+GET /api/actions
+GET /api/goals
+
+# 4. Statistiques
+GET /api/views/stats/summary
+GET /api/actions/stats/summary
+GET /api/goals/stats/summary
+
+# 5. Tests CRUD (après avoir copié les IDs)
+GET /api/views/:id
+PUT /api/views/:id
+DELETE /api/views/:id
+```
+
+## 📈 Exemples d'utilisation
+
+### Créer une vue simple
 
 ```bash
 curl -X POST http://localhost:3000/api/views \
   -H "Content-Type: application/json" \
   -d '{
     "source": "website",
-    "url": "https://example.com/page",
+    "url": "https://example.com/home",
     "visitor": "user123",
     "meta": {
       "userAgent": "Mozilla/5.0...",
@@ -132,7 +191,7 @@ curl -X POST http://localhost:3000/api/views \
   }'
 ```
 
-### Créer une action
+### Créer une action complexe
 
 ```bash
 curl -X POST http://localhost:3000/api/actions \
@@ -143,14 +202,25 @@ curl -X POST http://localhost:3000/api/actions \
     "action": "add_to_cart",
     "visitor": "user456",
     "meta": {
-      "productId": "prod_123",
-      "price": 29.99,
-      "category": "electronics"
+      "product": {
+        "id": "prod_123",
+        "name": "Smartphone XYZ",
+        "price": 599.99,
+        "category": "electronics"
+      },
+      "cart": {
+        "totalItems": 3,
+        "totalValue": 1299.97
+      },
+      "user": {
+        "isLoggedIn": true,
+        "membership": "premium"
+      }
     }
   }'
 ```
 
-### Créer un objectif
+### Créer un objectif avec métadonnées riches
 
 ```bash
 curl -X POST http://localhost:3000/api/goals \
@@ -161,79 +231,194 @@ curl -X POST http://localhost:3000/api/goals \
     "goal": "purchase_completed",
     "visitor": "user789",
     "meta": {
-      "orderId": "order_456",
-      "totalAmount": 149.99,
-      "paymentMethod": "credit_card"
+      "order": {
+        "id": "order_456",
+        "amount": 299.99,
+        "currency": "EUR",
+        "products": ["prod_001", "prod_002"]
+      },
+      "payment": {
+        "method": "credit_card",
+        "provider": "stripe",
+        "transactionId": "txn_789"
+      },
+      "customer": {
+        "email": "user@example.com",
+        "country": "France",
+        "isNewCustomer": false
+      }
     }
   }'
 ```
 
-## 🔍 Filtres et pagination
+## 🛠️ Configuration
 
-Tous les endpoints de liste supportent la pagination et les filtres :
+### Variables d'environnement (`.env`)
 
 ```bash
-# Pagination
+# Configuration MongoDB
+MONGODB_URI=mongodb://localhost:27017/analytics
+
+# Configuration du serveur
+PORT=3000
+
+# Configuration CORS (optionnel)
+CORS_ORIGIN=http://localhost:3000
+```
+
+### Scripts disponibles
+
+```bash
+npm start          # Démarrer en production
+npm run dev        # Démarrer en développement (avec nodemon)
+npm test           # Lancer les tests automatiques
+npm run seed       # Ajouter des données de test
+```
+
+### Structure du projet
+
+```
+ANALYTICS/
+├── server.js              # Serveur principal
+├── package.json           # Dépendances et scripts
+├── README.md              # Cette documentation
+├── .gitignore             # Fichiers à ignorer
+├── env.example            # Variables d'environnement
+├── test-api.js            # Tests automatiques
+├── insomnia-collection.json # Collection Insomnia
+├── models/                # Modèles Mongoose
+│   ├── View.js           # Modèle des vues
+│   ├── Action.js         # Modèle des actions
+│   └── Goal.js           # Modèle des objectifs
+├── routes/                # Routes de l'API
+│   ├── views.js          # Routes des vues
+│   ├── actions.js        # Routes des actions
+│   └── goals.js          # Routes des objectifs
+└── scripts/               # Scripts utilitaires
+    └── seed-data.js       # Données de test
+```
+
+## 📚 Documentation complète
+
+### Filtres et pagination
+
+Tous les endpoints de liste supportent :
+
+**Pagination :**
+
+```bash
 GET /api/views?page=1&limit=20
-
-# Filtres
-GET /api/views?source=website&visitor=user123
-
-# Combinaison
-GET /api/actions?page=2&limit=10&action=click&source=mobile-app
 ```
 
-## 📈 Statistiques
-
-Chaque ressource propose des endpoints de statistiques :
+**Filtres :**
 
 ```bash
-# Statistiques des vues
-GET /api/views/stats/summary
-
-# Statistiques des actions
-GET /api/actions/stats/summary
-
-# Statistiques des objectifs
-GET /api/goals/stats/summary
+GET /api/views?source=website&visitor=user123
+GET /api/actions?action=click&source=mobile-app
+GET /api/goals?goal=purchase_completed
 ```
 
-## 🗄️ Base de données
+**Combinaison :**
 
-L'API utilise MongoDB avec les collections suivantes :
+```bash
+GET /api/actions?page=2&limit=10&action=click&source=website
+```
 
-- `views` - Stockage des vues
-- `actions` - Stockage des actions
-- `goals` - Stockage des objectifs
+### Réponses standardisées
 
-Chaque collection inclut des index pour optimiser les performances des requêtes.
+**Liste avec pagination :**
 
-## 🛠️ Technologies utilisées
+```json
+{
+  "views": [...],
+  "totalPages": 5,
+  "currentPage": 1,
+  "totalCount": 100
+}
+```
 
-- **Node.js** - Runtime JavaScript
-- **Express.js** - Framework web
-- **MongoDB** - Base de données NoSQL
-- **Mongoose** - ODM pour MongoDB
-- **CORS** - Gestion des requêtes cross-origin
+**Statistiques :**
 
-## 📋 Prérequis
+```json
+{
+  "totalViews": 1000,
+  "uniqueVisitors": 250,
+  "uniqueSources": 3,
+  "uniqueUrls": 50
+}
+```
 
-- Node.js (version 14 ou supérieure)
-- MongoDB (version 4.4 ou supérieure)
-- npm ou yarn
+### Gestion d'erreurs
 
-## 🔒 Sécurité
+```json
+{
+  "message": "Les champs source, url et visitor sont requis"
+}
+```
 
-- Validation des données d'entrée
-- Gestion des erreurs centralisée
-- Protection CORS configurable
-- Validation des types avec Mongoose
+### Codes de statut HTTP
+
+- `200` : Succès
+- `201` : Créé avec succès
+- `400` : Données invalides
+- `404` : Ressource non trouvée
+- `500` : Erreur serveur
+
+## 🎯 Avantages de cette API
+
+### ✅ Flexibilité MongoDB
+
+- **Métadonnées dynamiques** : Stockage de n'importe quelle structure JSON
+- **Évolution du schéma** : Pas de migration nécessaire
+- **Performance** : Index optimisés pour les requêtes fréquentes
+
+### ✅ API REST complète
+
+- **CRUD complet** : Création, lecture, modification, suppression
+- **Statistiques intégrées** : Analyses en temps réel
+- **Filtres avancés** : Recherche flexible
+- **Pagination automatique** : Gestion des grandes collections
+
+### ✅ Prêt pour la production
+
+- **Validation robuste** : Gestion d'erreurs centralisée
+- **CORS configuré** : Compatible cross-origin
+- **Logs structurés** : Debugging facilité
+- **Tests inclus** : Validation automatique
 
 ## 🚀 Déploiement
 
-L'API est prête pour le déploiement en production. Assurez-vous de :
+### Production
 
 1. Configurer les variables d'environnement
 2. Sécuriser la connexion MongoDB
-3. Configurer un reverse proxy si nécessaire
-4. Mettre en place la surveillance et les logs
+3. Configurer un reverse proxy (nginx)
+4. Mettre en place la surveillance
+
+### Docker (optionnel)
+
+```dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+EXPOSE 3000
+CMD ["npm", "start"]
+```
+
+## 🤝 Contribution
+
+1. Fork le projet
+2. Créer une branche feature
+3. Commit les changements
+4. Push vers la branche
+5. Ouvrir une Pull Request
+
+## 📄 Licence
+
+ISC License - Libre d'utilisation
+
+---
+
+**🎉 Votre API Analytics est prête !** MongoDB gère parfaitement la flexibilité des métadonnées, et vous pouvez stocker n'importe quelle structure de données sans contrainte de schéma.
