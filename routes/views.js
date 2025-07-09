@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const View = require('../models/View');
 
-// GET /api/views - Récupérer toutes les vues
+// Récupérer toutes les vues
 router.get('/', async (req, res) => {
   try {
     const { page = 1, limit = 10, source, visitor, url } = req.query;
@@ -31,7 +31,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET /api/views/:id - Récupérer une vue par ID
+// Récupérer une vue par ID
 router.get('/:id', async (req, res) => {
   try {
     const view = await View.findById(req.params.id);
@@ -44,7 +44,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST /api/views - Créer une nouvelle vue
+// Créer une nouvelle vue
 router.post('/', async (req, res) => {
   try {
     const { source, url, visitor, meta } = req.body;
@@ -69,7 +69,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// PUT /api/views/:id - Mettre à jour une vue
+// Mettre à jour une vue
 router.put('/:id', async (req, res) => {
   try {
     const { source, url, visitor, meta } = req.body;
@@ -96,7 +96,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// DELETE /api/views/:id - Supprimer une vue
+// Supprimer une vue
 router.delete('/:id', async (req, res) => {
   try {
     const view = await View.findByIdAndDelete(req.params.id);
@@ -109,7 +109,7 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// GET /api/views/stats/summary - Statistiques des vues
+// Statistiques des vues
 router.get('/stats/summary', async (req, res) => {
   try {
     const totalViews = await View.countDocuments();

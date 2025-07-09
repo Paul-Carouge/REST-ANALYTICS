@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Action = require('../models/Action');
 
-// GET /api/actions - Récupérer toutes les actions
+// Récupérer toutes les actions
 router.get('/', async (req, res) => {
   try {
     const { page = 1, limit = 10, source, visitor, action, url } = req.query;
@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET /api/actions/:id - Récupérer une action par ID
+// Récupérer une action par ID
 router.get('/:id', async (req, res) => {
   try {
     const action = await Action.findById(req.params.id);
@@ -45,7 +45,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST /api/actions - Créer une nouvelle action
+// Créer une nouvelle action
 router.post('/', async (req, res) => {
   try {
     const { source, url, action, visitor, meta } = req.body;
@@ -71,7 +71,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// PUT /api/actions/:id - Mettre à jour une action
+// Mettre à jour une action
 router.put('/:id', async (req, res) => {
   try {
     const { source, url, action, visitor, meta } = req.body;
@@ -99,7 +99,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// DELETE /api/actions/:id - Supprimer une action
+// Supprimer une action
 router.delete('/:id', async (req, res) => {
   try {
     const action = await Action.findByIdAndDelete(req.params.id);
@@ -112,7 +112,7 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// GET /api/actions/stats/summary - Statistiques des actions
+// Statistiques des actions
 router.get('/stats/summary', async (req, res) => {
   try {
     const totalActions = await Action.countDocuments();

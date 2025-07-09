@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Goal = require('../models/Goal');
+const View = require('../models/View');
+const Action = require('../models/Action');
 
-// GET /api/goals - Récupérer tous les objectifs
+// Récupérer tous les objectifs
 router.get('/', async (req, res) => {
   try {
     const { page = 1, limit = 10, source, visitor, goal, url } = req.query;
@@ -32,7 +34,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET /api/goals/:id - Récupérer un objectif par ID
+// Récupérer un objectif par ID
 router.get('/:id', async (req, res) => {
   try {
     const goal = await Goal.findById(req.params.id);
@@ -45,7 +47,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST /api/goals - Créer un nouvel objectif
+// Créer un nouvel objectif
 router.post('/', async (req, res) => {
   try {
     const { source, url, goal, visitor, meta } = req.body;
@@ -71,7 +73,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// PUT /api/goals/:id - Mettre à jour un objectif
+// Mettre à jour un objectif
 router.put('/:id', async (req, res) => {
   try {
     const { source, url, goal, visitor, meta } = req.body;
@@ -99,7 +101,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// DELETE /api/goals/:id - Supprimer un objectif
+// Supprimer un objectif
 router.delete('/:id', async (req, res) => {
   try {
     const goal = await Goal.findByIdAndDelete(req.params.id);
@@ -112,7 +114,7 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// GET /api/goals/stats/summary - Statistiques des objectifs
+// Statistiques des objectifs
 router.get('/stats/summary', async (req, res) => {
   try {
     const totalGoals = await Goal.countDocuments();
@@ -142,6 +144,29 @@ router.get('/stats/summary', async (req, res) => {
       uniqueUrls,
       popularGoals,
       goalConversionRates
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Erreur serveur', error: error.message });
+  }
+});
+
+// Détails du goal + views et actions du visitor
+router.get('/:goalId/details', async (req, res) => {
+  try {
+    const goal = await Goal.findById(req.params.goalId);
+    if (!goal) {
+      return res.status(404).json({ message: 'Objectif non trouvé' });
+    }
+    const visitor = goal.visitor;
+    // Récupérer toutes les views et actions de ce visitor
+    const [views, actions] = await Promise.all([
+      View.find({ visitor }).sort({ createdAt: -1 }),
+      Action.find({ visitor }).sort({ createdAt: -1 })
+    ]);
+    res.json({
+      goal,
+      views,
+      actions
     });
   } catch (error) {
     res.status(500).json({ message: 'Erreur serveur', error: error.message });
