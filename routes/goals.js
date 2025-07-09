@@ -34,6 +34,29 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Détails du goal + views et actions du visitor
+router.get('/:goalId/details', async (req, res) => {
+  try {
+    const goal = await Goal.findById(req.params.goalId);
+    if (!goal) {
+      return res.status(404).json({ message: 'Objectif non trouvé' });
+    }
+    const visitor = goal.visitor;
+    // Récupérer toutes les views et actions de ce visitor
+    const [views, actions] = await Promise.all([
+      View.find({ visitor }).sort({ createdAt: -1 }),
+      Action.find({ visitor }).sort({ createdAt: -1 })
+    ]);
+    res.json({
+      goal,
+      views,
+      actions
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Erreur serveur', error: error.message });
+  }
+});
+
 // Récupérer un objectif par ID
 router.get('/:id', async (req, res) => {
   try {
@@ -144,29 +167,6 @@ router.get('/stats/summary', async (req, res) => {
       uniqueUrls,
       popularGoals,
       goalConversionRates
-    });
-  } catch (error) {
-    res.status(500).json({ message: 'Erreur serveur', error: error.message });
-  }
-});
-
-// Détails du goal + views et actions du visitor
-router.get('/:goalId/details', async (req, res) => {
-  try {
-    const goal = await Goal.findById(req.params.goalId);
-    if (!goal) {
-      return res.status(404).json({ message: 'Objectif non trouvé' });
-    }
-    const visitor = goal.visitor;
-    // Récupérer toutes les views et actions de ce visitor
-    const [views, actions] = await Promise.all([
-      View.find({ visitor }).sort({ createdAt: -1 }),
-      Action.find({ visitor }).sort({ createdAt: -1 })
-    ]);
-    res.json({
-      goal,
-      views,
-      actions
     });
   } catch (error) {
     res.status(500).json({ message: 'Erreur serveur', error: error.message });
