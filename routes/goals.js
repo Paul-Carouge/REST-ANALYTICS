@@ -15,12 +15,14 @@ router.get('/', async (req, res) => {
     if (goal) filter.goal = goal;
     if (url) filter.url = url;
 
+    // Récupérer les objectifs
     const goals = await Goal.find(filter)
       .sort({ createdAt: -1 })
       .limit(limit * 1)
       .skip((page - 1) * limit)
       .exec();
 
+    // Compter le nombre d'objectifs
     const count = await Goal.countDocuments(filter);
 
     res.json({
@@ -37,20 +39,55 @@ router.get('/', async (req, res) => {
 // Détails du goal + views et actions du visitor
 router.get('/:goalId/details', async (req, res) => {
   try {
+    // On commence par retrouver le goal
     const goal = await Goal.findById(req.params.goalId);
     if (!goal) {
       return res.status(404).json({ message: 'Objectif non trouvé' });
     }
+
+    // Récupérer toutes les views et actions du même visitor
     const visitor = goal.visitor;
-    // Récupérer toutes les views et actions de ce visitor
-    const [views, actions] = await Promise.all([
-      View.find({ visitor }).sort({ createdAt: -1 }),
-      Action.find({ visitor }).sort({ createdAt: -1 })
+
+    // On utilise $facet pour tout faire en une seule requête (trouvé sur la doc de mongo)
+    const mongoose = require('mongoose');
+    const results = await Goal.aggregate([
+      { $match: { _id: new mongoose.Types.ObjectId(req.params.goalId) } },
+      {
+        $facet: {
+          goal: [{ $limit: 1 }],
+          views: [
+            {
+              $lookup: {
+                from: 'views',
+                localField: 'visitor',
+                foreignField: 'visitor',
+                as: 'views'
+              }
+            },
+            { $unwind: '$views' },
+            { $replaceRoot: { newRoot: '$views' } }
+          ],
+          actions: [
+            {
+              $lookup: {
+                from: 'actions',
+                localField: 'visitor',
+                foreignField: 'visitor',
+                as: 'actions'
+              }
+            },
+            { $unwind: '$actions' },
+            { $replaceRoot: { newRoot: '$actions' } }
+          ]
+        }
+      }
     ]);
+
+    const data = results[0];
     res.json({
-      goal,
-      views,
-      actions
+      goal: data.goal[0] || null,
+      views: data.views,
+      actions: data.actions
     });
   } catch (error) {
     res.status(500).json({ message: 'Erreur serveur', error: error.message });
@@ -75,12 +112,14 @@ router.post('/', async (req, res) => {
   try {
     const { source, url, goal, visitor, meta } = req.body;
     
+    // Vérifier si les champs sont présents
     if (!source || !url || !goal || !visitor) {
       return res.status(400).json({ 
         message: 'Les champs source, url, goal et visitor sont requis' 
       });
     }
 
+    // Créer un nouvel objectif
     const newGoal = new Goal({
       source,
       url,
@@ -89,6 +128,7 @@ router.post('/', async (req, res) => {
       meta: meta || {}
     });
 
+    // Enregistrer l'objectif
     const savedGoal = await newGoal.save();
     res.status(201).json(savedGoal);
   } catch (error) {
@@ -101,6 +141,7 @@ router.put('/:id', async (req, res) => {
   try {
     const { source, url, goal, visitor, meta } = req.body;
     
+    // Créer un nouvel objectif
     const updateData = {};
     if (source) updateData.source = source;
     if (url) updateData.url = url;
@@ -108,6 +149,7 @@ router.put('/:id', async (req, res) => {
     if (visitor) updateData.visitor = visitor;
     if (meta) updateData.meta = meta;
 
+    // Mettre à jour l'objectif
     const updatedGoal = await Goal.findByIdAndUpdate(
       req.params.id,
       updateData,
